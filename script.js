@@ -76,8 +76,7 @@ function setupEvents() {
   $('#sampleBtn').addEventListener('click', loadSampleData);
   $('#clearBtn').addEventListener('click', clearData);
   $('#themeToggle').addEventListener('click', () => document.body.classList.toggle('dark'));
-  $('#mobileTabSelect').addEventListener('change', (e) => openTab(e.target.value));
-  $$('.tab-btn').forEach(btn => btn.addEventListener('click', () => openTab(btn.dataset.tab)));
+  $$('.tab-btn, .mobile-tab-btn').forEach(btn => btn.addEventListener('click', () => openTab(btn.dataset.tab)));
   document.addEventListener('click', (e) => {
     const target = e.target.closest('[data-open-tab]');
     if (target) openTab(target.dataset.openTab);
@@ -267,8 +266,8 @@ function fillCategorySelects() {
 function openTab(tab) {
   currentTab = tab;
   $$('.tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
+  $$('.mobile-tab-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.tab === tab));
   $$('.tab-panel').forEach(panel => panel.classList.toggle('active', panel.id === `tab-${tab}`));
-  $('#mobileTabSelect').value = tab;
   if (tab === 'dashboard') renderDashboard();
 }
 

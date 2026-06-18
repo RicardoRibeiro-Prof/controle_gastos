@@ -48,3 +48,8 @@ As informações são salvas na tabela `usuarios` do Supabase.
 
 O arquivo `app-icon.png` é usado como ícone do aplicativo quando o app for instalado/adicionado à área de trabalho.
 Ele não aparece mais dentro da interface do sistema.
+
+
+## Menu mobile
+
+No celular, a navegação foi ajustada para aparecer em botões de menu, em vez de uma lista grande de seleção.

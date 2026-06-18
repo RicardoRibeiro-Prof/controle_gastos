@@ -83,14 +83,12 @@
       </div>
     </header>
 
-    <section class="mobile-tabs">
-      <select id="mobileTabSelect" aria-label="Selecionar aba">
-        <option value="lancar">Lançar Gasto</option>
-        <option value="dashboard">Dashboard</option>
-        <option value="gastos">Gastos</option>
-        <option value="alertas">Alertas</option>
-        <option value="config">Configurações</option>
-      </select>
+    <section class="mobile-tabs" aria-label="Menu mobile">
+      <button class="mobile-tab-btn active" data-tab="lancar" type="button"><span>✎</span><small>Lançar</small></button>
+      <button class="mobile-tab-btn" data-tab="dashboard" type="button"><span>▦</span><small>Dashboard</small></button>
+      <button class="mobile-tab-btn" data-tab="gastos" type="button"><span>▣</span><small>Gastos</small></button>
+      <button class="mobile-tab-btn" data-tab="alertas" type="button"><span>⚠</span><small>Alertas</small></button>
+      <button class="mobile-tab-btn" data-tab="config" type="button"><span>⚙</span><small>Config.</small></button>
     </section>
 
     <main class="container">
