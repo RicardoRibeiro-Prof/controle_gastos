@@ -7,6 +7,7 @@ App simples de controle de gastos com dashboard, login e conexão com Supabase.
 - `index.html`
 - `style.css`
 - `script.js`
+- `app-icon.png`
 
 ## Banco de dados
 

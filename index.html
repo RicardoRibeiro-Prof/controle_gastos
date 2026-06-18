@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Controle de Gastos</title>
+  <link rel="icon" type="image/png" href="app-icon.png" />
+  <link rel="apple-touch-icon" href="app-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,7 +15,7 @@
   <main id="loginScreen" class="login-screen">
     <section class="login-card">
       <div class="brand-row center">
-        <div class="brand-logo">↗</div>
+        <div class="brand-logo"><img src="app-icon.png" alt="Ícone do app" /></div>
         <div>
           <h1>Controle de Gastos</h1>
           <p>Organize seus gastos de forma simples.</p>
@@ -60,7 +62,7 @@
   <div id="appScreen" class="app hidden">
     <header class="topbar">
       <div class="brand-row">
-        <div class="brand-logo">↗</div>
+        <div class="brand-logo"><img src="app-icon.png" alt="Ícone do app" /></div>
         <strong>Controle de Gastos</strong>
       </div>
 
@@ -114,16 +116,21 @@
                 O que foi o gasto?
                 <input id="expenseText" type="text" placeholder="Ex: almoço 25" required />
               </label>
-              <div class="form-row">
+              <div class="form-row three">
+                <label>
+                  Valor
+                  <input id="expenseValue" type="number" min="0.01" step="0.01" placeholder="Ex: 25,00" required />
+                </label>
                 <label>
                   Data
                   <input id="expenseDate" type="date" required />
                 </label>
                 <label>
-                  Categoria detectada
+                  Categoria
                   <select id="expenseCategory"></select>
                 </label>
               </div>
+              <p class="form-help">Se o sistema não identificar a categoria corretamente, selecione manualmente antes de salvar.</p>
               <button class="primary-btn" type="submit">Salvar gasto</button>
             </form>
           </section>

@@ -66,7 +66,7 @@ function setupEvents() {
   $('#showLoginBtn').addEventListener('click', () => toggleAuthMode('login'));
   $('#profileForm').addEventListener('submit', updateProfile);
   $('#logoutBtn').addEventListener('click', logout);
-  $('#expenseText').addEventListener('input', autoDetectCategory);
+  $('#expenseText').addEventListener('input', handleExpenseTextInput);
   $('#expenseForm').addEventListener('submit', addExpense);
   $('#filterMonth').addEventListener('change', renderAll);
   $('#dashboardCategoryFilter').addEventListener('change', renderAll);
@@ -272,10 +272,19 @@ function openTab(tab) {
   if (tab === 'dashboard') renderDashboard();
 }
 
+function handleExpenseTextInput() {
+  autoDetectCategory();
+  autoFillExpenseValue();
+}
 function autoDetectCategory() {
   const text = normalizeText($('#expenseText').value);
   const found = detectCategory(text);
   $('#expenseCategory').value = found.name;
+}
+function autoFillExpenseValue() {
+  const extracted = extractValue($('#expenseText').value);
+  const valueInput = $('#expenseValue');
+  if (extracted > 0) valueInput.value = extracted.toFixed(2);
 }
 function detectCategory(text) {
   const normalized = normalizeText(text);
@@ -294,8 +303,19 @@ async function addExpense(e) {
   if (!currentUser?.id) return alert('Faça login para salvar o gasto.');
 
   const text = $('#expenseText').value.trim();
-  const value = extractValue(text);
-  if (!value || value <= 0) return alert('Digite o valor do gasto. Exemplo: gasolina 80');
+  const typedValue = parseFloat(String($('#expenseValue').value || '').replace(',', '.'));
+  const extractedValue = extractValue(text);
+  const value = typedValue > 0 ? typedValue : extractedValue;
+  if (!text) {
+    alert('Digite o nome do gasto. Exemplo: tapioca');
+    $('#expenseText').focus();
+    return;
+  }
+  if (!value || value <= 0) {
+    alert('Informe o valor do gasto no campo Valor. Exemplo: 25,00');
+    $('#expenseValue').focus();
+    return;
+  }
 
   const category = $('#expenseCategory').value || detectCategory(text).name;
   const newExpense = {
@@ -321,6 +341,7 @@ async function addExpense(e) {
   expenses.unshift(mapExpense(data));
   $('#expenseForm').reset();
   $('#expenseDate').value = todayISO();
+  $('#expenseValue').value = '';
   $('#expenseCategory').value = detectCategory('').name;
   renderAll();
   showQuickAlert(category);
