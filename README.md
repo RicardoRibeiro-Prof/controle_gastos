@@ -8,6 +8,7 @@ App simples de controle de gastos com dashboard, login e conexão com Supabase.
 - `style.css`
 - `script.js`
 - `app-icon.png`
+- `manifest.json`
 
 ## Banco de dados
 
@@ -41,3 +42,9 @@ Na primeira utilização, clique em **Criar meu primeiro acesso** e cadastre nom
 Depois de entrar no sistema, acesse **Configurações > Meu acesso** para alterar nome, usuário ou senha.
 
 As informações são salvas na tabela `usuarios` do Supabase.
+
+
+## Ícone do app
+
+O arquivo `app-icon.png` é usado como ícone do aplicativo quando o app for instalado/adicionado à área de trabalho.
+Ele não aparece mais dentro da interface do sistema.
