@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Controle de Gastos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="loginScreen" class="login-screen">
+    <section class="login-card">
+      <div class="brand-row center">
+        <div class="brand-logo">↗</div>
+        <div>
+          <h1>Controle de Gastos</h1>
+          <p>Organize seus gastos de forma simples.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" class="login-form">
+        <label>
+          Usuário
+          <input id="loginUser" type="text" placeholder="Digite seu usuário" autocomplete="username" required />
+        </label>
+        <label>
+          Senha
+          <input id="loginPass" type="password" placeholder="Digite sua senha" autocomplete="current-password" required />
+        </label>
+        <button type="submit" class="primary-btn full">Entrar</button>
+        <p class="login-note">Acesse com suas credenciais para entrar no sistema.</p>
+        <button id="showRegisterBtn" type="button" class="auth-switch-btn">Criar meu primeiro acesso</button>
+      </form>
+
+      <form id="registerForm" class="login-form hidden">
+        <label>
+          Nome
+          <input id="registerName" type="text" placeholder="Digite seu nome" autocomplete="name" required />
+        </label>
+        <label>
+          Usuário
+          <input id="registerUser" type="text" placeholder="Crie um usuário" autocomplete="username" required />
+        </label>
+        <label>
+          Senha
+          <input id="registerPass" type="password" placeholder="Crie uma senha" autocomplete="new-password" required />
+        </label>
+        <label>
+          Confirmar senha
+          <input id="registerPassConfirm" type="password" placeholder="Repita a senha" autocomplete="new-password" required />
+        </label>
+        <button type="submit" class="primary-btn full">Criar cadastro</button>
+        <button id="showLoginBtn" type="button" class="auth-switch-btn">Já tenho cadastro</button>
+      </form>
+    </section>
+  </main>
+
+  <div id="appScreen" class="app hidden">
+    <header class="topbar">
+      <div class="brand-row">
+        <div class="brand-logo">↗</div>
+        <strong>Controle de Gastos</strong>
+      </div>
+
+      <nav class="tabs" aria-label="Navegação principal">
+        <button class="tab-btn active" data-tab="lancar"><span>✎</span> Lançar Gasto</button>
+        <button class="tab-btn" data-tab="dashboard"><span>▦</span> Dashboard</button>
+        <button class="tab-btn" data-tab="gastos"><span>▣</span> Gastos</button>
+        <button class="tab-btn" data-tab="alertas"><span>⚠</span> Alertas</button>
+        <button class="tab-btn" data-tab="config"><span>⚙</span> Configurações</button>
+      </nav>
+
+      <div class="user-actions">
+        <button id="themeToggle" class="icon-btn" title="Alternar tema">☾</button>
+        <div class="avatar">AR</div>
+        <button id="logoutBtn" class="logout-btn">Sair</button>
+      </div>
+    </header>
+
+    <section class="mobile-tabs">
+      <select id="mobileTabSelect" aria-label="Selecionar aba">
+        <option value="lancar">Lançar Gasto</option>
+        <option value="dashboard">Dashboard</option>
+        <option value="gastos">Gastos</option>
+        <option value="alertas">Alertas</option>
+        <option value="config">Configurações</option>
+      </select>
+    </section>
+
+    <main class="container">
+      <section id="tab-lancar" class="tab-panel active">
+        <div class="hero-card">
+          <div>
+            <span class="eyebrow">Lançamento automático</span>
+            <h2>Digite o gasto e deixe o sistema organizar.</h2>
+            <p>Exemplos: <strong>gasolina 80</strong>, <strong>mercado 150</strong>, <strong>remédio 42</strong>, <strong>internet 99,90</strong>.</p>
+          </div>
+        </div>
+
+        <div id="quickAlertArea" class="quick-alert-area"></div>
+
+        <div class="single-column">
+          <section class="card form-card launch-card">
+            <div class="card-head-inline">
+              <div>
+                <h3>Novo gasto</h3>
+                <p class="muted">Informe o gasto de forma simples. O sistema identifica a categoria e você pode ajustar antes de salvar.</p>
+              </div>
+            </div>
+            <form id="expenseForm" class="expense-form">
+              <label>
+                O que foi o gasto?
+                <input id="expenseText" type="text" placeholder="Ex: almoço 25" required />
+              </label>
+              <div class="form-row">
+                <label>
+                  Data
+                  <input id="expenseDate" type="date" required />
+                </label>
+                <label>
+                  Categoria detectada
+                  <select id="expenseCategory"></select>
+                </label>
+              </div>
+              <button class="primary-btn" type="submit">Salvar gasto</button>
+            </form>
+          </section>
+        </div>
+      </section>
+
+      <section id="tab-dashboard" class="tab-panel">
+        <div class="dashboard-head">
+          <div>
+            <span class="eyebrow">Visão geral</span>
+            <h2>Dashboard financeiro</h2>
+          </div>
+          <div class="filters compact">
+            <input id="filterMonth" type="month" />
+            <select id="dashboardCategoryFilter"></select>
+          </div>
+        </div>
+
+        <section class="stats-grid">
+          <article class="stat-card blue">
+            <div>
+              <p>Total do mês</p>
+              <strong id="statTotal">R$ 0,00</strong>
+              <span id="statCompare" class="positive">Sem comparação</span>
+            </div>
+            <div class="stat-icon">💳</div>
+          </article>
+          <article class="stat-card green">
+            <div>
+              <p>Maior categoria</p>
+              <strong id="statTopCategory">-</strong>
+              <span id="statTopCategoryValue">R$ 0,00</span>
+            </div>
+            <div class="stat-icon">🛒</div>
+          </article>
+          <article class="stat-card purple">
+            <div>
+              <p>Quantidade de gastos</p>
+              <strong id="statCount">0</strong>
+              <span>Lançamentos no mês</span>
+            </div>
+            <div class="stat-icon">🧾</div>
+          </article>
+          <article class="stat-card orange">
+            <div>
+              <p>Média por gasto</p>
+              <strong id="statAverage">R$ 0,00</strong>
+              <span>Valor médio deste mês</span>
+            </div>
+            <div class="stat-icon">📊</div>
+          </article>
+        </section>
+
+        <section class="grid two dashboard-grid">
+          <article class="card chart-card">
+            <div class="card-title-row">
+              <h3>Evolução dos gastos</h3>
+              <span id="chartMonthLabel" class="pill">Mês atual</span>
+            </div>
+            <canvas id="lineCanvas" height="260"></canvas>
+          </article>
+
+          <article class="card chart-card">
+            <h3>Gastos por categoria</h3>
+            <div class="donut-wrap">
+              <canvas id="donutCanvas" width="240" height="240"></canvas>
+              <div id="categoryLegend" class="legend"></div>
+            </div>
+          </article>
+
+          <article class="card">
+            <h3>Alertas</h3>
+            <div id="dashboardAlerts" class="alerts-list"></div>
+            <button class="link-btn" data-open-tab="alertas">Ver todos os alertas ›</button>
+          </article>
+
+          <article class="card">
+            <h3>Últimos gastos</h3>
+            <div id="recentExpenses" class="expense-list compact-list"></div>
+            <button class="link-btn" data-open-tab="gastos">Ver todos os gastos ›</button>
+          </article>
+        </section>
+      </section>
+
+      <section id="tab-gastos" class="tab-panel">
+        <div class="dashboard-head">
+          <div>
+            <span class="eyebrow">Histórico</span>
+            <h2>Gastos lançados</h2>
+          </div>
+          <div class="filters">
+            <input id="searchExpense" type="search" placeholder="Buscar gasto" />
+            <select id="listCategoryFilter"></select>
+          </div>
+        </div>
+        <section class="card">
+          <div id="allExpenses" class="expense-list"></div>
+        </section>
+      </section>
+
+      <section id="tab-alertas" class="tab-panel">
+        <div class="dashboard-head">
+          <div>
+            <span class="eyebrow">Controle de limites</span>
+            <h2>Alertas por categoria</h2>
+            <p class="muted">Defina quanto pode gastar por mês em cada categoria.</p>
+          </div>
+        </div>
+        <section class="grid two">
+          <article class="card">
+            <h3>Limites mensais</h3>
+            <form id="limitsForm" class="limits-grid"></form>
+          </article>
+          <article class="card">
+            <h3>Situação do mês</h3>
+            <div id="allAlerts" class="alerts-list"></div>
+          </article>
+        </section>
+      </section>
+
+      <section id="tab-config" class="tab-panel">
+        <div class="dashboard-head">
+          <div>
+            <span class="eyebrow">Configurações</span>
+            <h2>Dados e preferências</h2>
+          </div>
+        </div>
+        <section class="grid two">
+          <article class="card">
+            <h3>Meu acesso</h3>
+            <p class="muted">Altere seus dados de entrada quando precisar.</p>
+            <form id="profileForm" class="expense-form">
+              <label>
+                Nome
+                <input id="profileName" type="text" placeholder="Seu nome" required />
+              </label>
+              <label>
+                Usuário
+                <input id="profileUser" type="text" placeholder="Seu usuário" required />
+              </label>
+              <label>
+                Nova senha
+                <input id="profilePass" type="password" placeholder="Deixe em branco para manter a senha atual" autocomplete="new-password" />
+              </label>
+              <label>
+                Confirmar nova senha
+                <input id="profilePassConfirm" type="password" placeholder="Repita a nova senha" autocomplete="new-password" />
+              </label>
+              <button type="submit" class="primary-btn">Salvar alterações</button>
+            </form>
+          </article>
+          <article class="card">
+            <h3>Exportar dados</h3>
+            <p class="muted">Baixe seus gastos em CSV para abrir no Excel ou Google Planilhas.</p>
+            <button id="exportBtn" class="primary-btn">Exportar CSV</button>
+          </article>
+          <article class="card danger-zone">
+            <h3>Área de teste</h3>
+            <p class="muted">Use dados de exemplo para visualizar o dashboard ou limpe tudo para começar do zero.</p>
+            <div class="button-row">
+              <button id="sampleBtn" class="secondary-btn">Carregar exemplo</button>
+              <button id="clearBtn" class="danger-btn">Limpar tudo</button>
+            </div>
+          </article>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="script.js"></script>
+</body>
+</html>
